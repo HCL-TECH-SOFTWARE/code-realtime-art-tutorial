@@ -1,0 +1,19 @@
+# Welcome to the Art Tutorial
+
+The purpose of this tutorial is to let you learn [Code RealTime](https://secure-dev-ops.github.io/code-realtime/) and the [Art language](https://secure-dev-ops.github.io/code-realtime/art-lang/) in a fun and interactive way by working on concrete exercises. It's recommended to complete the exercises in the order they are listed above. An exercise consists of a small draft Art application that illustrates a couple of specific features of the Art language. Your goal is to complete the application according to the instructions of the exercise, so that it works as expected. An application works correctly when it
+
+* can be built into an executable application without any errors reported by the [Art compiler](https://secure-dev-ops.github.io/code-realtime/building/art-compiler/) or the C++ compiler.
+* can be run without run-time errors
+* produces the expected result (for example makes a specific printout to `stdout`)
+
+To work on an exercise follow these steps:
+
+1. Press the **Open** button to start working on an exercise. The instructions for solving that particular exercise will appear. Read the instructions carefully, and click on any documentation link to learn more about the Art and Code RealTime features which the exercise illustrates. The [transformation configuration](https://secure-dev-ops.github.io/code-realtime/building/transformation-configurations/)(TC) which will build the exercise into an application will also appear.
+2. Make necessary changes to make the application work according to the instructions. For the initial simple exercises it's enough to make changes in the top capsule (which you can open from the TC by `ctrl-clicking` on the [topCapsule](https://secure-dev-ops.github.io/code-realtime/building/transformation-configurations/#topcapsule) property). When you come further in the list of exercises it may also be necessary to edit other Art files, C++ source files or even the TC file itself.
+3. The workspace contains one workspace folder for each exercise with all source files, including the TC file. Use the **Build** command in the TC file context menu to build the exercise application when you have made changes to it. Fix any errors reported by the Art compiler or C++ compiler. When the build is successful you can run the application using the **Run** command in the TC file context menu. 
+4. When you think the application works correctly, you can press the **Run** button next to the exercise in the table above. This will build the application, run it, and check that no run-time errors occur and that the application works according to the exercise instructions. 
+5. If you get stuck and need more help, you can press the **Hint** button. This will print additional, more detailed, instructions for how to perform the different tasks of the exercise. This text also has links to the documentation which are recommended to read to get a deeper understanding. It can be good to read the hint even if you are able to solve the exercise without it, since it sometimes can give a better understanding of the concepts used in the exercise.
+6. If you want to see a solution for the exercise click the **View Solution** button. Note that there often can be more than one way of solving an exercise, so the solution shown is not necessarily better than the one you created.
+7. Feel free to keep working and experimenting with an exercise even after you have a solution for it. There can often be more than one way of solving an exercise, and the more you experiment the more you will learn. But when you feel ready with an exercise press the **Complete** button to mark it as completed. If needed, you can at any time reopen a completed exercise by pressing the **Reopen** button.
+
+*Happy learning!*

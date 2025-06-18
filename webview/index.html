@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<meta http-equiv="Content-Security-Policy" content="style-src ${webview.cspSource} 'nonce-${nonce}'; script-src 'nonce-${nonce}';">
+            <title>Art Tutorial: Exercises</title>
+			<style id="main_style" type="text/css" nonce="${nonce}"></style>
+            <style id="prism_style" type="text/css" nonce="${nonce}"></style>
+        </head>
+        <body>
+            <div id="container">
+                <div id="header_div"> 
+                    <p>Completed <span id="completed_exercises_count">X</span> exercises out of <span id="total_exercises_count">Y</span> in <span id="exercises_location">L</span></p>
+                    <img id="info_image" src="${infoIconUri}"/>
+                </div>
+                <div id="exercises_div"> 
+                    <table id="exercises_table"></table>
+                </div>
+                <div id="description_div"></div>
+            </div>
+            <script id="main_script" nonce="${nonce}" src="${script_uri}"></script>
+            <script id="prism_script" nonce="${nonce}" src="${prism_script_uri}"></script>
+        </body>
+</html>

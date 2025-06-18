@@ -1,0 +1,104 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 5px;
+    overflow: hidden
+}
+
+#container {    
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+  
+#header_div {    
+    background-color:#6a69d0;
+    text-align:center;
+    height: 45px;
+    overflow: hidden;
+}
+
+#header_div p {    
+    display: inline-block;
+    font-size: 16px;
+}
+
+#info_image {
+    float: right;
+    height: 50%;
+    margin-right: 10px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+#exercises_div {    
+    overflow: auto;
+    flex: 1;
+}
+
+#description_div {   
+    background-color:#1e1d49; 
+    overflow: auto;
+    flex: 1;
+}
+
+.hidden {
+    display: none;
+}
+
+.selected {
+    background-color: #045b7e;    
+}
+
+.completed {
+    background-color: #0f6604;    
+}
+
+/* Make buttons fit perfectly in table cells */
+#exercises_table tr td:not(:first-child) 
+{
+    width: 1%;
+    white-space: nowrap;
+}
+
+#exercises_table {
+    border-collapse: collapse;
+}
+
+#exercises_table tr:hover {
+    border: 1px solid lightyellow;
+}
+
+/* Hint separator */
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+  
+.separator::before,
+.separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #acc908;
+}
+
+.separator:not(:empty)::before {
+    margin-right: .25em;
+}
+
+.separator:not(:empty)::after {
+    margin-left: .25em;
+}
+
+/* Style links that open files */
+.open-file-link::after { 
+    position: relative; /* use relative positioning so it scrolls with the text */
+    content: '';
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    margin-left: 0.25em;
+    background-size: 100%;   
+    background-image: url(${art_icon_uri});    
+}

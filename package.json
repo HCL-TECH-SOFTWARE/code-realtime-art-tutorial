@@ -1,0 +1,52 @@
+{
+  "name": "art-tutorial",
+  "displayName": "Art Tutorial",
+  "description": "An interactive tutorial for learning the Art language and Code RealTime",
+  "publisher": "secure-dev-ops",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "keywords": [
+    "Art",
+    "Code RealTime",
+    "Code RT",
+    "realtime",
+    "tutorial"
+  ],
+  "icon": "icons/code_rt_tutorial_icon.png",
+  "categories": [
+    "Other"
+  ],
+  "license": "MIT",
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "art-tutorial.exercises",
+        "title": "Exercises",
+        "category": "Art Tutorial"
+      }
+    ]
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "clean": "rimraf out/",
+    "build": "npm run clean && tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^12.12.0",
+    "@types/showdown": "^2.0.6",
+    "@types/vscode": "^1.74.1",
+    "eslint": "^7.32.0",
+    "rimraf": "^6.0.1"
+  },
+  "dependencies": {
+    "@vscode/vsce": "^3.4.2",
+    "node-html-parser": "^7.0.1",
+    "showdown": "^2.1.0",
+    "jsdom": "^16.7.0",
+    "dompurify": "^3.2.6"
+  }
+}
