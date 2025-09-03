@@ -2,6 +2,10 @@
   "name": "art-tutorial",
   "displayName": "Art Tutorial",
   "description": "An interactive tutorial for learning the Art language and Code RealTime",
+  "repository": {
+    "type": "git",
+		"url": "https://github.com/HCL-TECH-SOFTWARE/code-realtime-art-tutorial"
+  },
   "publisher": "secure-dev-ops",
   "version": "1.0.0",
   "engines": {
