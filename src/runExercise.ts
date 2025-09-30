@@ -135,12 +135,13 @@ export async function runExercise(exercise : Exercise) : Promise<boolean> {
         });
 
         childProcess.stderr.on('data', (data) => {
+            const str = data.toString();
             if (!exercise.allowErrorPrintouts) {
                 // Printouts to stderr are unexpected (except the start-up printouts)
-                if (data.startsWith('RT C++ Target Run Time System')) 
+                if (str.startsWith('RT C++ Target Run Time System')) 
                     return;
 
-                logMessage(`Application built for exercise "${exercise.name}" printed an error: ${data}`);
+                logMessage(`Application built for exercise "${exercise.name}" printed an error: ${str}`);
                 runtimeProblems = true;
             }
         });
