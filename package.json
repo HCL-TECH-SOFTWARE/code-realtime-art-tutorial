@@ -4,10 +4,10 @@
   "description": "An interactive tutorial for learning the Art language and Code RealTime",
   "repository": {
     "type": "git",
-		"url": "https://github.com/HCL-TECH-SOFTWARE/code-realtime-art-tutorial"
+    "url": "https://github.com/HCL-TECH-SOFTWARE/code-realtime-art-tutorial"
   },
   "publisher": "secure-dev-ops",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "engines": {
     "vscode": "^1.74.0"
   },
@@ -22,7 +22,7 @@
   "categories": [
     "Other"
   ],
-  "license": "MIT",
+  "license": "Apache-2.0",
   "main": "./out/extension.js",
   "contributes": {
     "commands": [

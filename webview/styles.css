@@ -37,7 +37,7 @@ body {
 }
 
 #description_div {   
-    background-color:#1e1d49; 
+    background-color:var(--vscode-editor-background); 
     overflow: auto;
     flex: 1;
 }
