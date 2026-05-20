@@ -138,7 +138,7 @@ export async function runExercise(exercise : Exercise) : Promise<boolean> {
             const str = data.toString();
             if (!exercise.allowErrorPrintouts) {
                 // Printouts to stderr are unexpected (except the start-up printouts)
-                if (str.startsWith('RT C++ Target Run Time System')) 
+                if (str.contains('RT C++ Target Run Time System') || str.contains('targetRTS: observability listening not enabled')) 
                     return;
 
                 logMessage(`Application built for exercise "${exercise.name}" printed an error: ${str}`);
