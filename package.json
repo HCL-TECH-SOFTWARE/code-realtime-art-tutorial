@@ -45,6 +45,7 @@
     "@types/vscode": "^1.74.1",
     "eslint": "^7.32.0",
     "rimraf": "^6.0.1"
+    "typescript": "^5.9.3"
   },
   "dependencies": {
     "@vscode/vsce": "^3.9.1",
