@@ -24,7 +24,7 @@ import * as vscode from 'vscode';
 const fs = require('fs');
 import { parse } from 'node-html-parser';
 import { Exercise } from './exercise.js';
-import { hasOwnProperty, logMessage, markdownToHTML, replaceAll } from './utils.js';
+import { logMessage, markdownToHTML, replaceAll, getViewColumnForFile } from './utils.js';
 import { runExercise } from './runExercise.js';
 
 let exercisesMap = new Map<string, Exercise>();
@@ -32,11 +32,13 @@ let exercisesMap = new Map<string, Exercise>();
 // Map iterator that iterates the exercises map in order of the exercise "order" property
 exercisesMap[Symbol.iterator] = function* () {
     yield* [...exercisesMap.entries()].sort((a, b) => a[1].order - b[1].order);
+    return undefined;
 }
 
 // Populate the workspace and exercise map from the contents of the given folder
 function readExercises(location : string) {
     let exerciseFolders = [];
+    exercisesMap.clear(); // Clear the existing exercises before reading new ones
 
     let items = fs.readdirSync(location, { withFileTypes : true });    
     for (let item of items) {
@@ -154,7 +156,7 @@ function getNonce(): string {
 	return nonce;
 }
 
-let introHTML : string = undefined;
+let introHTML : string | undefined = undefined;
 // Get the HTML for the introduction of the Art Tutorial
 function getIntroHTML(extensionUri : vscode.Uri) : string {
     if (introHTML)
@@ -167,7 +169,7 @@ function getIntroHTML(extensionUri : vscode.Uri) : string {
     return introHTML;
 }
 
-let defaultExerciseLocation : vscode.Uri = undefined;
+let defaultExerciseLocation : vscode.Uri | undefined = undefined;
 
 export function registerExercisesCmd(context: vscode.ExtensionContext) {
     return vscode.commands.registerCommand('art-tutorial.exercises', async (...commandArgs) => {         
@@ -311,12 +313,13 @@ function handleWebviewMessage(panel: vscode.WebviewPanel, context: vscode.Extens
                                 command: 'showExerciseDescription',
                                 descriptionHTML: exercise.descriptionHTML
                             });
+                        
+                            let tcUri: vscode.Uri = vscode.Uri.file(exercise.tcFile);  
+                            let options: vscode.TextDocumentShowOptions = {
+                                viewColumn: getViewColumnForFile(exercise.tcFile)
+                            };
+                            vscode.commands.executeCommand("vscode.open", tcUri, options);
                         }
-                        let tcUri: vscode.Uri = vscode.Uri.file(exercise.tcFile);  
-                        let options: vscode.TextDocumentShowOptions = {
-                            viewColumn: vscode.ViewColumn.Beside
-                        };
-                        vscode.commands.executeCommand("vscode.open", tcUri, options); 
                     }
 					break;					
                     case 'openHint': {
@@ -359,7 +362,7 @@ function handleWebviewMessage(panel: vscode.WebviewPanel, context: vscode.Extens
                     case 'viewSolution': {
                         let exercise = exercisesMap.get(message.exerciseName);
                         if (exercise && exercise.solutionFolder) {
-                            // Open the solution folder in the workspace
+                            // Open the solution folder in the workspace (if not already there)
                             let solutionWSFolder = vscode.workspace.workspaceFolders?.find(folder => folder.name === exercise.name + "_solution");
         
                             if (!solutionWSFolder) {                                
@@ -369,9 +372,10 @@ function handleWebviewMessage(panel: vscode.WebviewPanel, context: vscode.Extens
 
                             // Also open the TC file in the solution folder if it exists
                             if (fs.existsSync(exercise.solutionFolder + '/app.tcjs')) {
-                                let tcUri: vscode.Uri = vscode.Uri.file(exercise.solutionFolder + '/app.tcjs');  
+                                const tcFilePath = exercise.solutionFolder + '/app.tcjs';
+                                let tcUri: vscode.Uri = vscode.Uri.file(tcFilePath);  
                                 let options: vscode.TextDocumentShowOptions = {
-                                    viewColumn: vscode.ViewColumn.Beside
+                                    viewColumn: getViewColumnForFile(tcFilePath)
                                 };
                                 vscode.commands.executeCommand("vscode.open", tcUri, options); 
                             }                            
@@ -399,9 +403,9 @@ function handleWebviewMessage(panel: vscode.WebviewPanel, context: vscode.Extens
                         let exercise = exercisesMap.get(message.exerciseName);
                         if (exercise) {
                             // File paths are relative to the exercise folder
-                            let fileUri: vscode.Uri = vscode.Uri.file(exercise.folder + '/' + message.filePath);   
+                            let fileUri: vscode.Uri = vscode.Uri.file(exercise.folder + '/' + message.filePath);                            
                             let options: vscode.TextDocumentShowOptions = {
-                                viewColumn: vscode.ViewColumn.Beside
+                                viewColumn: getViewColumnForFile(message.filePath)
                             };                         
                             vscode.commands.executeCommand("vscode.open", fileUri, options);                            
                         }

@@ -1,7 +1,7 @@
 # Art Tutorial
-This extension helps you learn the [Art language](https://secure-dev-ops.github.io/code-realtime/art-lang/) and [Code RealTime](https://marketplace.visualstudio.com/items?itemName=secure-dev-ops.code-realtime-ce) by working on excercises. Such exercises can be found [here](https://github.com/HCL-TECH-SOFTWARE/code-realtime-art-exercises).
+This extension helps you learn the [Art language](https://secure-dev-ops.github.io/code-realtime/art-lang/) and [Code RealTime](https://marketplace.visualstudio.com/items?itemName=secure-dev-ops.code-realtime-ce) by working on exercises. Such exercises can be found [here](https://github.com/HCL-TECH-SOFTWARE/code-realtime-art-exercises).
 
-Invoke the command **Art Tutorial: Exercises** and specify a folder that contains Art excercises. The exercises will be loaded into the workspace and a web view will open. Use that web view to: 
+Invoke the command **Art Tutorial: Exercises** and specify a folder that contains Art exercises. The exercises will be loaded into the workspace and a web view will open. Use that web view to: 
 
 * Select which exercise to work on.
 * Open an Art file for that exercise. It typically provides an incomplete application, and the goal of the exercise is to complete it so it works according to the instructions.

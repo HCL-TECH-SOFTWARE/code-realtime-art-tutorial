@@ -31,7 +31,7 @@ export function hasOwnProperty<X extends {}, Y extends PropertyKey>
     return obj.hasOwnProperty(prop)
 }
 
-let outputChannel: vscode.OutputChannel = null;
+let outputChannel: vscode.OutputChannel | null = null;
 
 // Write a log message for the extension to its own output channel
 export function logMessage(msg: string) {
@@ -62,6 +62,43 @@ export function getTimestamp() : string {
 export function replaceAll(str : string, find : string, replace : string) {
     let s = str as any; // Workaround for that tsconfig modern string libraries doesn't work with node-html-parser
     return s.replaceAll(find, replace);
+}
+
+// Find the most appropriate view column for opening a file in VS Code tabs
+export function getViewColumnForFile(filePath: string): vscode.ViewColumn {
+    const normalizePath = (path: string) => path.replace(/\\/g, '/').toLowerCase();
+    const targetPath = normalizePath(filePath);
+
+    const getTabTextFilePath = (tab: vscode.Tab): string | undefined => {
+        if (tab.input instanceof vscode.TabInputText) {
+            return tab.input.uri.fsPath;
+        }
+        if (tab.input instanceof vscode.TabInputTextDiff) {
+            return tab.input.modified.fsPath;
+        }
+        return undefined;
+    };
+
+    // First pass: find a tab group that already has this exact file open.
+    for (const group of vscode.window.tabGroups.all) {
+        for (const tab of group.tabs) {
+            const tabPath = getTabTextFilePath(tab);
+            if (tabPath && normalizePath(tabPath) === targetPath) {
+                return group.viewColumn;
+            }
+        }
+    }
+
+    // Second pass: pick a tab group that already contains another text editor.
+    for (const group of vscode.window.tabGroups.all) {
+        for (const tab of group.tabs) {
+            if (getTabTextFilePath(tab)) {
+                return group.viewColumn;
+            }
+        }
+    }
+
+    return vscode.ViewColumn.Beside;
 }
 
 // Represents the result of invoking a command that can either fail or succeed with a message.

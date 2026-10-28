@@ -42,6 +42,10 @@ body {
     flex: 1;
 }
 
+p {
+  line-height: 1.4;
+}
+
 .hidden {
     display: none;
 }

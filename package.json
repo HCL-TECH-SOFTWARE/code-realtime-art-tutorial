@@ -7,7 +7,7 @@
     "url": "https://github.com/HCL-TECH-SOFTWARE/code-realtime-art-tutorial"
   },
   "publisher": "secure-dev-ops",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "engines": {
     "vscode": "^1.74.0"
   },
@@ -23,7 +23,7 @@
     "Other"
   ],
   "license": "Apache-2.0",
-  "main": "./out/extension.js",
+  "main": "./out/src/extension.js",
   "contributes": {
     "commands": [
       {
@@ -40,18 +40,19 @@
     "build": "npm run clean && tsc"
   },
   "devDependencies": {
-    "@types/node": "^12.12.0",
+    "@types/node": "^26.6.5",
     "@types/showdown": "^2.0.6",
     "@types/vscode": "^1.74.1",
-    "eslint": "^7.32.0",
-    "rimraf": "^6.0.1",
+    "@types/jsdom": "^30.0.0",
+    "eslint": "^10.13.0",
+    "rimraf": "^6.1.3",
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@vscode/vsce": "^3.9.1",
-    "node-html-parser": "^7.1.0",
+    "@vscode/vsce": "^4.0.0",
+    "node-html-parser": "^9.0.5",
     "showdown": "^2.1.0",
-    "jsdom": "^29.1.1",
-    "dompurify": "^3.4.5"
+    "jsdom": "^30.1.3",
+    "dompurify": "^3.4.17"
   }
 }

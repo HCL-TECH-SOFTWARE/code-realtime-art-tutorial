@@ -23,13 +23,30 @@ limitations under the License.
 const fs = require('fs');
 import { getTimestamp, logMessage } from './utils.js';
 
+type ConfigType = 'string' | 'number' | 'boolean' | 'string[]';
+
+type ConfigurableProperty =
+| 'order'
+| 'allowErrorPrintouts'
+| 'allowAdditionalOutput'
+| 'expectedToTerminate'
+| 'killAfter'
+| 'interactive'
+| 'folder'
+| 'solutionFolder'
+| 'descriptionHTML'
+| 'tcFile'
+| 'expectedOutput';
+
+type ExerciseConfig = Partial<Record<ConfigurableProperty, unknown>>;
+
 export class Exercise {
     name: string; // Name of exercise (same as folder name)
     folder: string; // Path to exercise folder 
     dataFolder: string; // Path to exercise data folder
     solutionFolder: string; // Path to exercise solution folder
     descriptionHTML: string; // HTML description of exercise (from the exercise.md file)
-    hintHTML: string = undefined; // HTML description of exercise (from the hint.md file). Undefined if no hint is available.
+    hintHTML: string | undefined = undefined; // HTML description of exercise (from the hint.md file). Undefined if no hint is available.
     tcFile: string; // Path to TC file (app.tcjs) for the exercise
     completed: string = ''; // Timestamp when the exercise was completed, or empty if not completed    
 
@@ -44,26 +61,33 @@ export class Exercise {
 
     constructor(name: string, path: string) {
         this.name = name;
-        this.dataFolder = path;        
-    }
+        this.dataFolder = path;
+        this.folder = "";
+        this.solutionFolder = "";
+        this.descriptionHTML = "";
+        this.tcFile = "";
+        this.expectedOutput = [];
+    }    
 
     // Validate that the config property is of the expected type. 
     // If yes, set the property in the exercise object.
     // If no, throw a TypeError.    
-    checkAndSetConfigProperty(config : object, property : string, expectedType : string) {
-        if (config[property]) {
-            let actualType : string = typeof config[property];
-            if (actualType == 'object' && Array.isArray(config[property])) {
-                actualType = 'string[]'; // Assume string array for empty arrays
-                if (config[property].length > 0) {
-                    actualType = typeof config[property][0] + '[]';
-                }                                
-            }
-            if (actualType != expectedType) {
-                throw new TypeError(`Property "${property}" in exercise.json for exercise "${this.name}" is of type "${actualType}" but should be "${expectedType}".`);
-            }
-            this[property] = config[property];
+    checkAndSetConfigProperty(config: ExerciseConfig, property: ConfigurableProperty, expectedType: ConfigType): void {
+        const value = config[property];
+        if (value === undefined) return; // important: don't use truthy check
+
+        let actualType: string = typeof value;
+        if (Array.isArray(value)) {
+            actualType = value.length > 0 ? `${typeof value[0]}[]` : 'string[]';
         }
+
+        if (actualType !== expectedType) {
+            throw new TypeError(
+                `Property "${property}" in exercise.json for exercise "${this.name}" is of type "${actualType}" but should be "${expectedType}".`
+            );
+        }
+
+        (this as Record<ConfigurableProperty, unknown>)[property] = value;
     }
 
     // Complete the exercise

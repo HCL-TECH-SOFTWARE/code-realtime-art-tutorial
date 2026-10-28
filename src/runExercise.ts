@@ -36,7 +36,7 @@ export async function runExercise(exercise : Exercise) : Promise<boolean> {
     const cmdResult = checkCommandFailure(result);
     if (cmdResult.failed) {
         logMessage(`Failed to extract from the TC ${tcUri.fsPath} necessary information for running the exercise. Reason: ${cmdResult.msg}`);
-        return;
+        return false;
     }
     const tcConfig = JSON.parse(result);
     let targetFolder : string = tcConfig.targetFolderPath;    
@@ -89,7 +89,7 @@ export async function runExercise(exercise : Exercise) : Promise<boolean> {
         
         let outputToBeReceived =  exercise.expectedOutput.slice();
 
-        let childProcess;
+        let childProcess: any;
         try {
             childProcess = spawn(tcConfig.executableName, ['-URTS_DEBUG=quit'], {cwd : tcConfig.buildPath});
         }
@@ -109,13 +109,13 @@ export async function runExercise(exercise : Exercise) : Promise<boolean> {
             }
         }, exercise.killAfter * 1000); 
 
-        childProcess.on('error', (err) => {
+        childProcess.on('error', (err : any) => {
             // Run-time errors are always unexpected (e.g. failure to launch it)
             logMessage(`Application built for exercise "${exercise.name}" experienced a run-time error: ${err}`); 
             resolve(false);
         });
 
-        childProcess.stdout.on('data', (data) => {
+        childProcess.stdout.on('data', (data : any) => {
             // Match with the expected printout            
             if (outputToBeReceived && outputToBeReceived.length > 0) {
                 data.toString().trim().split('\n').forEach((line : string) => {
@@ -134,7 +134,7 @@ export async function runExercise(exercise : Exercise) : Promise<boolean> {
             }            
         });
 
-        childProcess.stderr.on('data', (data) => {
+        childProcess.stderr.on('data', (data : any) => {
             const str = data.toString();
             if (!exercise.allowErrorPrintouts) {
                 // Printouts to stderr are unexpected (except the start-up printouts)
@@ -146,7 +146,7 @@ export async function runExercise(exercise : Exercise) : Promise<boolean> {
             }
         });
 
-        childProcess.on('close', (code) => {
+        childProcess.on('close', (code : any) => {
             // Run completed. We will always come here, so this is where we decide if the run was successful or not.
             clearTimeout(timer);                                
                 

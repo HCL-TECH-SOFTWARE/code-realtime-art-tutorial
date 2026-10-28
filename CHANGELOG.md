@@ -1,4 +1,8 @@
-# 1.0.2 (BUILD_QUALIFIER)
+# 1.0.3 (BUILD_QUALIFIER)
+* Uplift dependencies
+* Improve command for opening new files so they don't always open in a new tab group
+
+# 1.0.2 (2026-06-05 06:54)
 * Uplift dependencies
 * Do not fail execution of exercise due to expected TargetRTS printout about observability not enabled
 
